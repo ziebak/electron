@@ -164,7 +164,9 @@ void WebFrame::RegisterURLSchemeAsPrivileged(const std::string& scheme,
   bool bypassCSP = true;
   bool allowServiceWorkers = true;
   bool supportFetchAPI = true;
+#if 0  // FIXME(alexeykuzmin)
   bool corsEnabled = true;
+#endif
   if (args->Length() == 2) {
     mate::Dictionary options;
     if (args->GetNext(&options)) {
@@ -172,7 +174,9 @@ void WebFrame::RegisterURLSchemeAsPrivileged(const std::string& scheme,
       options.Get("bypassCSP", &bypassCSP);
       options.Get("allowServiceWorkers", &allowServiceWorkers);
       options.Get("supportFetchAPI", &supportFetchAPI);
+#if 0  // FIXME(alexeykuzmin)
       options.Get("corsEnabled", &corsEnabled);
+#endif
     }
   }
   // Register scheme to privileged list (https, wss, data, chrome-extension)
@@ -194,9 +198,13 @@ void WebFrame::RegisterURLSchemeAsPrivileged(const std::string& scheme,
     blink::SchemeRegistry::RegisterURLSchemeAsSupportingFetchAPI(
         privileged_scheme);
   }
+  // FIXME(alexeykuzmin): `SchemeRegistry::RegisterURLSchemeAsCORSEnabled`
+  // was removed from Chromium.
+#if 0
   if (corsEnabled) {
     blink::SchemeRegistry::RegisterURLSchemeAsCORSEnabled(privileged_scheme);
   }
+#endif
 }
 
 void WebFrame::InsertText(const std::string& text) {

@@ -102,7 +102,11 @@ void RendererClientBase::RenderThreadStarted() {
   // In Chrome we should set extension's origins to match the pages they can
   // work on, but in Electron currently we just let extensions do anything.
   blink::SchemeRegistry::RegisterURLSchemeAsSecure(extension_scheme);
+  // FIXME(alexeykuzmin): `SchemeRegistry::RegisterURLSchemeAsCORSEnabled`
+  // was removed from Chromium.
+#if 0
   blink::SchemeRegistry::RegisterURLSchemeAsCORSEnabled(extension_scheme);
+#endif
   blink::SchemeRegistry::RegisterURLSchemeAsBypassingContentSecurityPolicy(
       extension_scheme);
 
