@@ -360,7 +360,6 @@ class WebContents : public mate::TrackableObject<WebContents>,
   void DevToolsClosed() override;
 
  private:
-
   uint32_t GetNextRequestId() {
     return ++request_id_;
   }
