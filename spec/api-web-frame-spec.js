@@ -4,8 +4,7 @@ const {closeWindow} = require('./window-helpers')
 const {remote, webFrame} = require('electron')
 const {BrowserWindow, protocol, ipcMain} = remote
 
-// FIXME(alexeykuzmin): Crash on Mac.
-xdescribe('webFrame module', function () {
+describe('webFrame module', function () {
   var fixtures = path.resolve(__dirname, 'fixtures')
   var w = null
 
