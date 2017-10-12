@@ -29,8 +29,7 @@ describe('webContents module', function () {
     return closeWindow(w).then(function () { w = null })
   })
 
-  // FIXME(alexeykuzmin): Crash on Mac.
-  xdescribe('getAllWebContents() API', function () {
+  describe('getAllWebContents() API', function () {
     it('returns an array of web contents', function (done) {
       w.webContents.on('devtools-opened', function () {
         const all = webContents.getAllWebContents().sort(function (a, b) {
