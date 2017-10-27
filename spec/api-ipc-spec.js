@@ -551,14 +551,16 @@ describe('ipc module', function () {
       })
       w.webContents.once('did-finish-load', () => {
         w.webContents.once('did-finish-load', () => {
-          const expectedMessage = [
-            'Attempting to call a function in a renderer window that has been closed or released.',
-            'Function provided here: remote-event-handler.html:11:33',
-            'Remote event names: remote-handler, other-remote-handler'
-          ].join('\n')
           const results = ipcRenderer.sendSync('try-emit-web-contents-event', w.webContents.id, 'remote-handler')
+          if (results && results.warningMessage) {
+            // Compare only the first line of the warning message. The rest is likely
+            // to change from version to version based on internal implementation details.
+            let newline = results.warningMessage.indexOf('\n')
+            if (newline >= 0)
+              results.warningMessage = results.warningMessage.slice(0, newline)
+          }
           assert.deepEqual(results, {
-            warningMessage: expectedMessage,
+            warningMessage: 'Attempting to call a function in a renderer window that has been closed or released.',
             listenerCountBefore: 2,
             listenerCountAfter: 1
           })
