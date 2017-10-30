@@ -2555,9 +2555,7 @@ describe('BrowserWindow module', function () {
       })
 
       describe('when the devtools is docked', function () {
-        // TODO(alexeykuzmin): Disabled during Chromium 61 upgrade.
-        // Fix it and enable.
-        xit('creates the extension', function (done) {
+        it('creates the extension', function (done) {
           w.webContents.openDevTools({mode: 'bottom'})
 
           ipcMain.once('answer', function (event, message) {
@@ -2582,9 +2580,7 @@ describe('BrowserWindow module', function () {
       })
 
       describe('when the devtools is undocked', function () {
-        // TODO(alexeykuzmin): Disabled during Chromium 61 upgrade.
-        // Fix it and enable.
-        xit('creates the extension', function (done) {
+        it('creates the extension', function (done) {
           w.webContents.openDevTools({mode: 'undocked'})
 
           ipcMain.once('answer', function (event, message, extensionId) {
@@ -2596,9 +2592,7 @@ describe('BrowserWindow module', function () {
       })
     })
 
-    // TODO(alexeykuzmin): Disabled during Chromium 61 upgrade.
-    // Fix it and enable.
-    xit('works when used with partitions', function (done) {
+    it('works when used with partitions', function (done) {
       if (w != null) {
         w.destroy()
       }

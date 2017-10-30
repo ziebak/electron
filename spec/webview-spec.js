@@ -1185,8 +1185,7 @@ describe('<webview> tag', function () {
     })
   })
 
-  // TODO(alexeykuzmin): Disabled during Ch61 upgrade. Fix it and enable.
-  xit('loads devtools extensions registered on the parent window', function (done) {
+  it('loads devtools extensions registered on the parent window', function (done) {
     w = new BrowserWindow({
       show: false
     })
