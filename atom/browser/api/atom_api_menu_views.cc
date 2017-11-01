@@ -20,8 +20,7 @@ MenuViews::MenuViews(v8::Isolate* isolate, v8::Local<v8::Object> wrapper)
       weak_factory_(this) {
 }
 
-void MenuViews::PopupAt(
-    Window* window, int x, int y, int positioning_item, bool async) {
+void MenuViews::PopupAt(Window* window, int x, int y, int positioning_item) {
   NativeWindow* native_window = static_cast<NativeWindow*>(window->window());
   if (!native_window)
     return;
@@ -42,10 +41,6 @@ void MenuViews::PopupAt(
   }
 
   int flags = MenuRunner::CONTEXT_MENU | MenuRunner::HAS_MNEMONICS;
-#if 0  // FIXME(alexeykuzmin): Remove async flag.
-  if (async)
-    flags |= MenuRunner::ASYNC;
-#endif
 
   // Don't emit unresponsive event when showing menu.
   atom::UnresponsiveSuppressor suppressor;
