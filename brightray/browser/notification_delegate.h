@@ -27,7 +27,7 @@ class NotificationDelegate {
 
  protected:
   NotificationDelegate() = default;
-  ~NotificationDelegate() = default;
+  virtual ~NotificationDelegate() = default;
 };
 
 }  // namespace brightray

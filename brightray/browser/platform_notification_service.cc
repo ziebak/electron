@@ -49,6 +49,7 @@ class NotificationDelegateImpl : public brightray::NotificationDelegate {
  public:
   explicit NotificationDelegateImpl(const std::string& notification_id)
       : notification_id_(notification_id) {}
+  ~NotificationDelegateImpl() override = default;
 
   void NotificationDestroyed() override { delete this; }
 
