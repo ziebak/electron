@@ -137,9 +137,12 @@ describe('<webview> tag', function () {
       document.body.appendChild(webview)
     })
 
-    it('loads node symbols after POST navigation when set', (done) => {
+    it('loads node symbols after POST navigation when set', function (done) {
       // FIXME Figure out why this is timing out on AppVeyor
-      if (process.env.APPVEYOR === 'True') return done()
+      if (process.env.APPVEYOR === 'True') {
+        this.skip()
+        return
+      }
 
       webview.addEventListener('console-message', (e) => {
         assert.equal(e.message, 'function object object')
@@ -409,7 +412,11 @@ describe('<webview> tag', function () {
   })
 
   describe('allowpopups attribute', () => {
-    if (process.env.TRAVIS === 'true' && process.platform === 'darwin') return
+    before(function () {
+      if (process.env.TRAVIS === 'true' && process.platform === 'darwin') {
+        this.skip()
+      }
+    })
 
     it('can not open new window when not set', (done) => {
       const listener = (e) => {
@@ -495,7 +502,11 @@ describe('<webview> tag', function () {
   })
 
   describe('new-window event', () => {
-    if (process.env.TRAVIS === 'true' && process.platform === 'darwin') return
+    before(function () {
+      if (process.env.TRAVIS === 'true' && process.platform === 'darwin') {
+        this.skip()
+      }
+    })
 
     it('emits when window.open is called', (done) => {
       webview.addEventListener('new-window', (e) => {
@@ -824,8 +835,11 @@ describe('<webview> tag', function () {
   })
 
   describe('executeJavaScript', () => {
-    it('should support user gesture', (done) => {
-      if (process.env.TRAVIS !== 'true' || process.platform === 'darwin') return done()
+    it('should support user gesture', function (done) {
+      if (process.env.TRAVIS !== 'true' || process.platform === 'darwin') {
+        this.skip()
+        return
+      }
 
       const listener = () => {
         webview.removeEventListener('enter-html-full-screen', listener)
@@ -842,8 +856,11 @@ describe('<webview> tag', function () {
       document.body.appendChild(webview)
     })
 
-    it('can return the result of the executed script', (done) => {
-      if (process.env.TRAVIS === 'true' && process.platform === 'darwin') return done()
+    it('can return the result of the executed script', function (done) {
+      if (process.env.TRAVIS === 'true' && process.platform === 'darwin') {
+        this.skip()
+        return
+      }
 
       const listener = () => {
         const jsScript = "'4'+2"
@@ -1551,7 +1568,10 @@ describe('<webview> tag', function () {
     })
 
     it('can be manually resized with setSize even when attribute is present', done => {
-      if (process.env.TRAVIS === 'true') return done()
+      if (process.env.TRAVIS === 'true') {
+        this.skip()
+        return
+      }
 
       w = new BrowserWindow({show: false, width: 200, height: 200})
       w.loadURL(`file://${fixtures}/pages/webview-no-guest-resize.html`)

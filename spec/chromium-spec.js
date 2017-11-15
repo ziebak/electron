@@ -27,7 +27,10 @@ describe('chromium feature', () => {
 
   describe('heap snapshot', () => {
     it('does not crash', () => {
-      if (process.env.TRAVIS === 'true') return
+      if (process.env.TRAVIS === 'true') {
+        this.skip()
+      }
+
       process.atomBinding('v8_util').takeHeapSnapshot()
     })
   })
@@ -165,7 +168,11 @@ describe('chromium feature', () => {
   })
 
   describe('window.open', () => {
-    if (process.env.TRAVIS === 'true' && process.platform === 'darwin') return
+    before(function () {
+      if (process.env.TRAVIS === 'true' && process.platform === 'darwin') {
+        this.skip()
+      }
+    })
 
     it('returns a BrowserWindowProxy object', () => {
       const b = window.open('about:blank', '', 'show=no')
@@ -666,10 +673,16 @@ describe('chromium feature', () => {
   })
 
   describe('webgl', () => {
-    if (isCI && process.platform === 'win32') return
+    before(function () {
+      if (isCI && process.platform === 'win32') {
+        this.skip()
+      }
+    })
 
     it('can be get as context in canvas', () => {
-      if (process.platform === 'linux') return
+      if (process.platform === 'linux') {
+        this.skip()
+      }
 
       const webgl = document.createElement('canvas').getContext('webgl')
       assert.notEqual(webgl, null)
