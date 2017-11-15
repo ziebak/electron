@@ -14,6 +14,7 @@
 #include "base/threading/worker_pool.h"
 #include "brightray/browser/net/devtools_network_controller_handle.h"
 #include "brightray/browser/net/devtools_network_transaction_factory.h"
+#include "brightray/browser/net/require_ct_delegate.h"
 #include "brightray/browser/net_log.h"
 #include "brightray/browser/network_delegate.h"
 #include "brightray/common/switches.h"
@@ -138,6 +139,7 @@ URLRequestContextGetter::URLRequestContextGetter(
       in_memory_(in_memory),
       io_task_runner_(io_task_runner),
       file_task_runner_(file_task_runner),
+      ct_delegate_(new RequireCTDelegate),
       protocol_interceptors_(std::move(protocol_interceptors)),
       job_factory_(nullptr) {
   // Must first be created on the UI thread.
@@ -280,8 +282,7 @@ net::URLRequestContext* URLRequestContextGetter::GetURLRequestContext() {
 
     std::unique_ptr<net::TransportSecurityState> transport_security_state =
         base::WrapUnique(new net::TransportSecurityState);
-    transport_security_state->SetRequireCTDelegate(
-        delegate_->GetRequireCTDelegate());
+    transport_security_state->SetRequireCTDelegate(ct_delegate_.get());
     storage_->set_transport_security_state(std::move(transport_security_state));
     storage_->set_cert_verifier(delegate_->CreateCertVerifier());
     storage_->set_ssl_config_service(delegate_->CreateSSLConfigService());
