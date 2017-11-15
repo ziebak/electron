@@ -3,51 +3,14 @@
 // found in the LICENSE file.
 
 #include "atom/common/api/atom_api_clipboard.h"
+#include "atom/common/api/atom_skia_utils.h"
 
 #include "atom/common/native_mate_converters/image_converter.h"
 #include "atom/common/native_mate_converters/string16_converter.h"
 #include "base/strings/utf_string_conversions.h"
-#include "third_party/skia/include/core/SkBitmap.h"
-#include "third_party/skia/include/core/SkImageInfo.h"
-#include "third_party/skia/include/core/SkPixmap.h"
 #include "ui/base/clipboard/scoped_clipboard_writer.h"
 
 #include "atom/common/node_includes.h"
-
-namespace {
-
-// TODO(alexeykuzmin): It is a copy of `sk_tool_utils::copy_to()`,
-// use the original function if possible, skia doesn't export it.
-bool copy_to(SkBitmap* dst, SkColorType dstColorType, const SkBitmap& src) {
-  SkPixmap srcPM;
-  if (!src.peekPixels(&srcPM)) {
-    return false;
-  }
-
-  SkBitmap tmpDst;
-  SkImageInfo dstInfo = srcPM.info().makeColorType(dstColorType);
-  if (!tmpDst.setInfo(dstInfo)) {
-    return false;
-  }
-
-  if (!tmpDst.tryAllocPixels()) {
-    return false;
-  }
-
-  SkPixmap dstPM;
-  if (!tmpDst.peekPixels(&dstPM)) {
-    return false;
-  }
-
-  if (!srcPM.readPixels(dstPM)) {
-    return false;
-  }
-
-  dst->swap(tmpDst);
-  return true;
-}
-
-}  // namespace
 
 namespace atom {
 

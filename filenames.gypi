@@ -379,6 +379,8 @@
       'atom/browser/window_list_observer.h',
       'atom/common/api/api_messages.h',
       'atom/common/api/atom_api_asar.cc',
+      'atom/common/api/atom_skia_utils.h',
+      'atom/common/api/atom_skia_utils.cc',
       'atom/common/api/atom_api_clipboard.cc',
       'atom/common/api/atom_api_clipboard.h',
       'atom/common/api/atom_api_clipboard_mac.mm',
